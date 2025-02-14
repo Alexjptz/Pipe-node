@@ -93,8 +93,10 @@ while true; do
     echo "2. Установка (Installation)"
     echo "3. Управление (Operational menu)"
     echo "4. Логи (Logs)"
-    echo "5. Удаление (Delete)"
-    echo "6. Выход (Exit)"
+    echo "5. О ноде (Node info)"
+    echo "6. Восстановление (Recovery)"
+    echo "7. Удаление (Delete)"
+    echo "8. Выход (Exit)"
     echo
     read -p "Выберите опцию (Select option): " option
 
@@ -128,7 +130,8 @@ while true; do
                 echo "4. Статус (Status)"
                 echo "5. Поинты (Points)"
                 echo "6. Статистика (Stats)"
-                echo "7. Выход (Exit)"
+                echo "7. Обновить токен (Refresh token)"
+                echo "8. Выход (Exit)"
                 echo
                 read -p "Выберите опцию (Select option): " option
                 echo
@@ -137,7 +140,7 @@ while true; do
                         # Registration
                         process_notification "Регистрируем (Registration)..."
                         read -p "Введите (Enter) referral code: " REF_CODE
-                        run_commands "cd $HOME && ./pop --signup-by-referral-route $REF_CODE"
+                        run_commands "cd $HOME/pipe && ./pop --signup-by-referral-route $REF_CODE"
                         ;;
                     2)
                         # START
@@ -167,6 +170,10 @@ while true; do
                         cd $HOME && ./pop --stats
                         ;;
                     7)
+                        # REFRESH TOKEN
+                        cd $HOME && ./pop --refresh
+                        ;;
+                    8)
                         break
                         ;;
                     *)
@@ -181,6 +188,46 @@ while true; do
             cd $HOME && screen -r pipe
             ;;
         5)
+            # NODE INFO
+            process_notification "Ищем (Looking)..."
+            show_green "------ Сохраните данные. Save data ------"
+            cd $HOME && cat node_info.json
+            show_green "-----------------------------------------"
+            ;;
+        6)
+            # RECOVERY
+            process_notification "Начинаем восстановление. Starting data recovery"
+
+            process_notification "Ищем JSON фаил (Looking for JSON File)... "
+            if [ -f "$HOME/node_info.json" ]; then
+            sleep 1
+            echo
+            show_green "Успешно (Success)"
+            echo
+            FILE="$HOME/node_info.json"
+
+            read -p "Введите (enter) Node ID: " node_id
+            read -p "Введите (enter) Token: " token
+            REGISTRATION=true
+
+            jq --arg node_id "$node_id" \
+            --argjson registration "$REGISTRATION" \
+            --arg token "$token" \
+            '.node_id = $node_id |
+                .registered = $registration |
+                .token = $token' "$FILE" > "$FILE.tmp" && mv "$FILE.tmp" "$FILE"
+
+            echo ""
+            show_green "------ ФАИЛ ОБНОВЛЕН. FILE UPDATED ------"
+            echo ""
+        else
+            sleep 1
+            echo ""
+            show_red "Не найден (Didn't find)"
+            echo ""
+        fi
+            ;;
+        7)
             # DELETE
             process_notification "Удаление (Deleting)..."
             echo
@@ -209,7 +256,7 @@ while true; do
                 esac
             done
             ;;
-        6)
+        8)
             # EXIT
             exit_script
             ;;
