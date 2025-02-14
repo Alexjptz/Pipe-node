@@ -192,6 +192,7 @@ while true; do
             process_notification "Ищем (Looking)..."
             show_green "------ Сохраните данные. Save data ------"
             cd $HOME && cat node_info.json
+            echo
             show_green "-----------------------------------------"
             ;;
         6)
@@ -220,12 +221,12 @@ while true; do
             echo ""
             show_green "------ ФАИЛ ОБНОВЛЕН. FILE UPDATED ------"
             echo ""
-        else
-            sleep 1
-            echo ""
-            show_red "Не найден (Didn't find)"
-            echo ""
-        fi
+            else
+                sleep 1
+                echo ""
+                show_red "Не найден (Didn't find)"
+                echo ""
+            fi
             ;;
         7)
             # DELETE
