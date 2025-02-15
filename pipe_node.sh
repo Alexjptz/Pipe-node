@@ -140,7 +140,7 @@ while true; do
                         # Registration
                         process_notification "Регистрируем (Registration)..."
                         read -p "Введите (Enter) referral code: " REF_CODE
-                        run_commands "cd $HOME/pipe && ./pop --signup-by-referral-route $REF_CODE"
+                        run_commands "cd $HOME/ && ./pop --signup-by-referral-route $REF_CODE"
                         ;;
                     2)
                         # START
