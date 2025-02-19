@@ -112,7 +112,7 @@ while true; do
         2)
             # INSTALLATION
             process_notification "Установка (Installation)..."
-            run_commands "cd $HOME && wget https://dl.pipecdn.app/v0.2.5/pop && chmod +x pop"
+            run_commands "cd $HOME && wget https://dl.pipecdn.app/v0.2.8/pop && chmod +x pop"
 
             process_notification "Создаем каталог (Create folder)..."
             run_commands "mkdir download_cache"
