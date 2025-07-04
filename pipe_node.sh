@@ -449,13 +449,13 @@ while true; do
             menu_item 2 "🛑" "Stop"      "Остановить контейнер"
             menu_item 3 "🔄" "Restart"   "Перезапустить"
             menu_item 4 "🖥️" "Console"   "Connect to container"
-            menu_item 4 "↩️" "Back"      "Назад"
+            menu_item 5 "↩️" "Back"      "Назад"
             echo; read -p "$(show_gray 'Select operation ➤ ') " op_option; echo
             case $op_option in
                 1) start_node ;;
                 2) stop_node ;;
                 3) restart_node ;;
-                4) ocker exec -it popnode /bin/bash ;;
+                4) docker exec -it popnode /bin/bash ;;
                 4) continue ;;
                 *) incorrect_option ;;
             esac ;;
