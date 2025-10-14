@@ -12,6 +12,7 @@ show_cyan()   { echo -e "\e[36m$1\e[0m"; }
 show_purple() { echo -e "\e[35m$1\e[0m"; }
 show_gray()   { echo -e "\e[90m$1\e[0m"; }
 show_white()  { echo -e "\e[97m$1\e[0m"; }
+show_yellow() { echo -e "\e[1;33m$1\e[0m"; }
 show_blink()  { echo -e "\e[5m$1\e[0m"; }
 
 # SYSTEM FUNCS
