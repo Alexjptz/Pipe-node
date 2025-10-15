@@ -402,8 +402,8 @@ show_node_status() {
     if is_node_running; then
         show_green "✅ Node is running"
         echo
-        show_cyan "Service status:"
-        sudo systemctl status pipe --no-pager -l
+        show_cyan "Node status from pop command:"
+        sudo -u root -H bash -c "cd /opt/pipe && ./pop status" 2>/dev/null || show_orange "⚠️ Status command not available"
     else
         show_red "❌ Node is stopped"
     fi
