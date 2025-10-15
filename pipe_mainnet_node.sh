@@ -399,7 +399,7 @@ view_logs() {
 
 # Show node status
 show_node_status() {
-        sudo /opt/pipe/pop status
+        cd /opt/pipe && ./pop status
 }
 
 # Show earnings
