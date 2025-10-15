@@ -544,17 +544,17 @@ show_management_menu() {
     while true; do
         clear
         menu_header
-        menu_item 1 "📜" "Logs"           "View node logs"
-        menu_item 2 "🔄" "Restart"        "Restart node"
-        menu_item 3 "🛑" "Stop"           "Stop node"
-        menu_item 4 "🚀" "Start"          "Start node"
-        menu_item 5 "📊" "Status"         "Node status"
-        menu_item 6 "💰" "Earnings"       "View earnings"
-        menu_item 7 "🩺" "Health"         "Health check"
-        menu_item 8 "🔑" "Wallet"        "Show Solana address"
-        menu_item 9 "✏️" "Change Wallet"  "Change Solana address"
-        menu_item 10 "📚" "Help"          "Help commands"
-        menu_item 0 "↩️" "Back"          "Back to main menu"
+        menu_item 1 "📜" "Logs"           "Показать логи"
+        menu_item 2 "🔄" "Restart"        "Перезапустить"
+        menu_item 3 "🛑" "Stop"           "Остановить"
+        menu_item 4 "🚀" "Start"          "Запустить"
+        menu_item 5 "📊" "Status"         "Статус"
+        menu_item 6 "💰" "Earnings"       "Показать доходы"
+        menu_item 7 "🩺" "Health"         "Проверка состояния"
+        menu_item 8 "🔑" "Wallet"         "Показать адрес Solana"
+        menu_item 9 "✏️" "Change Wallet"  "Изменить адрес Solana"
+        menu_item 10 "📚" "Help"          "Помощбь"
+        menu_item 0 "↩️" "Back"           "Вернуться в главное меню"
         echo
         read -p "$(show_gray 'Select option ➤ ')" choice
         echo
@@ -586,10 +586,10 @@ show_management_menu() {
 print_logo
 while true; do
     menu_header
-    menu_item 1 "📦" "Install"         "Install Pipe Network Node"
-    menu_item 2 "⚙️" "Manage"          "Node management"
-    menu_item 3 "🗑️" "Remove"          "Remove node"
-    menu_item 4 "🚪" "Exit"            "Exit script"
+    menu_item 1 "📦" "Install"         "Установить"
+    menu_item 2 "⚙️" "Manage"          "Управление"
+    menu_item 3 "🗑️" "Remove"          "Удалить"
+    menu_item 4 "🚪" "Exit"            "Выйти"
     echo
     read -p "$(show_gray 'Select option ➤ ')" option
     echo
