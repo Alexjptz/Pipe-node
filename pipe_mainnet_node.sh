@@ -399,28 +399,22 @@ view_logs() {
 
 # Show node status
 show_node_status() {
-    if is_node_running; then
-        show_green "✅ Node is running"
-        echo
-        show_cyan "Node status from pop command:"
+    show_cyan "Node status from pop command:"
 
-        # Сохраняем текущую директорию
-        local current_dir=$(pwd)
+    # Сохраняем текущую директорию
+    local current_dir=$(pwd)
 
-        # Переходим в директорию и загружаем переменные окружения
-        cd /opt/pipe
-        if [[ -f .env ]]; then
-            source .env
-        fi
-
-        # Выполняем команду
-        ./pop status
-
-        # Возвращаемся в исходную директорию
-        cd "$current_dir"
-    else
-        show_red "❌ Node is stopped"
+    # Переходим в директорию и загружаем переменные окружения
+    cd /opt/pipe
+    if [[ -f .env ]]; then
+        source .env
     fi
+
+    # Выполняем команду
+    ./pop status
+
+    # Возвращаемся в исходную директорию
+    cd "$current_dir"
 }
 
 # Show earnings
