@@ -12,7 +12,13 @@ show_cyan()   { echo -e "\e[36m$1\e[0m"; }
 show_purple() { echo -e "\e[35m$1\e[0m"; }
 show_gray()   { echo -e "\e[90m$1\e[0m"; }
 show_white()  { echo -e "\e[97m$1\e[0m"; }
-show_yellow() { echo -e "\e[1;33m$1\e[0m"; }
+show_yellow() {
+    if [ -t 1 ]; then
+        echo -e "\033[1;33m$1\033[0m"
+    else
+        echo "$1"
+    fi
+}
 show_blink()  { echo -e "\e[5m$1\e[0m"; }
 
 # SYSTEM FUNCS
@@ -51,7 +57,7 @@ process_notification() {
 run_commands() {
     local commands="$*"
 
-    if eval "$commands"; then
+    if bash -c "$commands"; then
         sleep 1
         show_green "✅ Success"
     else
@@ -245,11 +251,10 @@ download_pipe_binary() {
 
     # Create installation directory
     run_commands "sudo mkdir -p /opt/pipe"
-    cd /opt/pipe
 
     # Download latest binary
-    run_commands "sudo curl -L https://pipe.network/p1-cdn/releases/latest/download/pop -o pop"
-    run_commands "sudo chmod +x pop"
+    run_commands "sudo curl -L https://pipe.network/p1-cdn/releases/latest/download/pop -o /opt/pipe/pop"
+    run_commands "sudo chmod +x /opt/pipe/pop"
 
     show_green "✅ Binary downloaded and made executable"
 }
@@ -408,8 +413,7 @@ show_node_status() {
 show_earnings() {
     if is_node_running; then
         process_notification "💰 Node earnings:"
-        cd /opt/pipe
-        sudo -u root ./pop earnings 2>/dev/null || show_orange "⚠️ Earnings command not available"
+        sudo -u root -H bash -c "cd /opt/pipe && ./pop earnings" 2>/dev/null || show_orange "⚠️ Earnings command not available"
     else
         show_red "❌ Node is not running"
     fi
@@ -428,7 +432,7 @@ health_check() {
 # Show Solana address
 show_solana_address() {
     if [[ -f /opt/pipe/.env ]]; then
-        solana_address=$(grep NODE_SOLANA_PUBLIC_KEY /opt/pipe/.env | cut -d'=' -f2)
+        solana_address=$(grep "^NODE_SOLANA_PUBLIC_KEY=" /opt/pipe/.env | head -1 | cut -d'=' -f2)
         show_green "✅ Solana Wallet Address:"
         show_cyan "$solana_address"
     else
@@ -448,7 +452,7 @@ change_solana_address() {
     setup_solana_wallet
 
     # Update .env file
-    run_commands "sudo sed -i \"s/NODE_SOLANA_PUBLIC_KEY=.*/NODE_SOLANA_PUBLIC_KEY=$NODE_SOLANA_PUBLIC_KEY/\" /opt/pipe/.env"
+    run_commands "sudo sed -i \"s/NODE_SOLANA_PUBLIC_KEY=.*/NODE_SOLANA_PUBLIC_KEY=$(echo \"$NODE_SOLANA_PUBLIC_KEY\" | sed 's/[[\.*^$()+?{|]/\\&/g')/\" /opt/pipe/.env"
 
     show_green "✅ Wallet address changed"
 }
@@ -572,7 +576,8 @@ show_management_menu() {
 
         if [ "$choice" != "0" ]; then
             echo
-            read -p "$(show_yellow 'Press Enter to continue...')"
+            show_yellow 'Press Enter to continue...'
+            read -p ""
         fi
     done
 }
