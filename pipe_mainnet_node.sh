@@ -553,7 +553,7 @@ show_management_menu() {
         menu_item 7 "🩺" "Health"         "Проверка состояния"
         menu_item 8 "🔑" "Wallet"         "Показать адрес Solana"
         menu_item 9 "✏️" "Change Wallet"  "Изменить адрес Solana"
-        menu_item 10 "📚" "Help"          "Помощбь"
+        menu_item 10 "📚" "Help"          "Помощь"
         menu_item 0 "↩️" "Back"           "Вернуться в главное меню"
         echo
         read -p "$(show_gray 'Select option ➤ ')" choice
