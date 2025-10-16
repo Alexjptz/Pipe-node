@@ -404,12 +404,7 @@ show_node_status() {
 
 # Show earnings
 show_earnings() {
-    if is_node_running; then
-        process_notification "💰 Node earnings:"
-        sudo -u root -H bash -c "cd /opt/pipe && ./pop earnings" 2>/dev/null || show_orange "⚠️ Earnings command not available"
-    else
-        show_red "❌ Node is not running"
-    fi
+    cd /opt/pipe && ./pop earnings
 }
 
 # Health check
