@@ -399,22 +399,7 @@ view_logs() {
 
 # Show node status
 show_node_status() {
-    show_cyan "Node status from pop command:"
-
-    # Сохраняем текущую директорию
-    local current_dir=$(pwd)
-
-    # Переходим в директорию и загружаем переменные окружения
-    cd /opt/pipe
-    if [[ -f .env ]]; then
-        source .env
-    fi
-
-    # Выполняем команду
-    ./pop status
-
-    # Возвращаемся в исходную директорию
-    cd "$current_dir"
+    cd /opt/pipe && ./pop status
 }
 
 # Show earnings
